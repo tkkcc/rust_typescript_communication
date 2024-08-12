@@ -53,6 +53,28 @@ export interface ColorPoint {
      * @generated from protobuf field: tttt.Point point = 2;
      */
     point?: Point;
+    /**
+     * @generated from protobuf field: float tolerance = 3;
+     */
+    tolerance: number;
+    /**
+     * @generated from protobuf field: string name = 4;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: optional float tolerance2 = 5;
+     */
+    tolerance2?: number;
+    /**
+     * @generated from protobuf field: repeated tttt.ColorPoint children = 6;
+     */
+    children: ColorPoint[];
+    /**
+     * @generated from protobuf field: map<string, tttt.ColorPoint> info = 7;
+     */
+    info: {
+        [key: string]: ColorPoint;
+    };
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Color$Type extends MessageType<Color> {
@@ -177,11 +199,20 @@ class ColorPoint$Type extends MessageType<ColorPoint> {
     constructor() {
         super("tttt.ColorPoint", [
             { no: 1, name: "color", kind: "message", T: () => Color },
-            { no: 2, name: "point", kind: "message", T: () => Point }
+            { no: 2, name: "point", kind: "message", T: () => Point },
+            { no: 3, name: "tolerance", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 4, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "tolerance2", kind: "scalar", opt: true, T: 2 /*ScalarType.FLOAT*/ },
+            { no: 6, name: "children", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ColorPoint },
+            { no: 7, name: "info", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => ColorPoint } }
         ]);
     }
     create(value?: PartialMessage<ColorPoint>): ColorPoint {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.tolerance = 0;
+        message.name = "";
+        message.children = [];
+        message.info = {};
         if (value !== undefined)
             reflectionMergePartial<ColorPoint>(this, message, value);
         return message;
@@ -197,6 +228,21 @@ class ColorPoint$Type extends MessageType<ColorPoint> {
                 case /* tttt.Point point */ 2:
                     message.point = Point.internalBinaryRead(reader, reader.uint32(), options, message.point);
                     break;
+                case /* float tolerance */ 3:
+                    message.tolerance = reader.float();
+                    break;
+                case /* string name */ 4:
+                    message.name = reader.string();
+                    break;
+                case /* optional float tolerance2 */ 5:
+                    message.tolerance2 = reader.float();
+                    break;
+                case /* repeated tttt.ColorPoint children */ 6:
+                    message.children.push(ColorPoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* map<string, tttt.ColorPoint> info */ 7:
+                    this.binaryReadMap7(message.info, reader, options);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -208,6 +254,22 @@ class ColorPoint$Type extends MessageType<ColorPoint> {
         }
         return message;
     }
+    private binaryReadMap7(map: ColorPoint["info"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof ColorPoint["info"] | undefined, val: ColorPoint["info"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = ColorPoint.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field tttt.ColorPoint.info");
+            }
+        }
+        map[key ?? ""] = val ?? ColorPoint.create();
+    }
     internalBinaryWrite(message: ColorPoint, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* tttt.Color color = 1; */
         if (message.color)
@@ -215,6 +277,25 @@ class ColorPoint$Type extends MessageType<ColorPoint> {
         /* tttt.Point point = 2; */
         if (message.point)
             Point.internalBinaryWrite(message.point, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* float tolerance = 3; */
+        if (message.tolerance !== 0)
+            writer.tag(3, WireType.Bit32).float(message.tolerance);
+        /* string name = 4; */
+        if (message.name !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.name);
+        /* optional float tolerance2 = 5; */
+        if (message.tolerance2 !== undefined)
+            writer.tag(5, WireType.Bit32).float(message.tolerance2);
+        /* repeated tttt.ColorPoint children = 6; */
+        for (let i = 0; i < message.children.length; i++)
+            ColorPoint.internalBinaryWrite(message.children[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, tttt.ColorPoint> info = 7; */
+        for (let k of globalThis.Object.keys(message.info)) {
+            writer.tag(7, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            ColorPoint.internalBinaryWrite(message.info[k], writer, options);
+            writer.join().join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -229,5 +310,6 @@ export const ColorPoint = new ColorPoint$Type();
  * @generated ServiceType for protobuf service tttt.RouteTest
  */
 export const RouteTest = new ServiceType("tttt.RouteTest", [
-    { name: "CheckColorPoint", options: {}, I: ColorPoint, O: ColorPoint }
+    { name: "CheckColorPoint", options: {}, I: ColorPoint, O: ColorPoint },
+    { name: "CheckPoint", options: {}, I: Point, O: Point }
 ]);

@@ -1,18 +1,18 @@
+use std::result::Result;
+
 use tonic::{transport::Server, Request, Response, Status};
 
 use tttt::{
     route_test_server::{RouteTest, RouteTestServer},
-    ColorPoint,
+    ColorPoint, Point,
 };
-
 
 pub mod tttt {
     tonic::include_proto!("tttt");
 }
 
 #[derive(Default)]
-pub struct MyGreeter {
-}
+pub struct MyGreeter {}
 
 #[tonic::async_trait]
 impl RouteTest for MyGreeter {
@@ -20,6 +20,15 @@ impl RouteTest for MyGreeter {
         &self,
         request: Request<ColorPoint>,
     ) -> Result<Response<ColorPoint>, Status> {
+        let mut color_point = request.into_inner();
+        if let Some(point) = color_point.point.as_mut() {
+            point.x += 100;
+        }
+
+        Ok(Response::new(color_point))
+    }
+
+    async fn check_point(&self, request: tonic::Request<Point>) -> Result<Response<Point>, Status> {
         Ok(Response::new(request.into_inner()))
     }
 }

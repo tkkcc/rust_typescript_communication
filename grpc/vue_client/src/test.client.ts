@@ -4,6 +4,7 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { RouteTest } from "./test";
+import type { Point } from "./test";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { ColorPoint } from "./test";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
@@ -16,6 +17,10 @@ export interface IRouteTestClient {
      * @generated from protobuf rpc: CheckColorPoint(tttt.ColorPoint) returns (tttt.ColorPoint);
      */
     checkColorPoint(input: ColorPoint, options?: RpcOptions): UnaryCall<ColorPoint, ColorPoint>;
+    /**
+     * @generated from protobuf rpc: CheckPoint(tttt.Point) returns (tttt.Point);
+     */
+    checkPoint(input: Point, options?: RpcOptions): UnaryCall<Point, Point>;
 }
 /**
  * @generated from protobuf service tttt.RouteTest
@@ -32,5 +37,12 @@ export class RouteTestClient implements IRouteTestClient, ServiceInfo {
     checkColorPoint(input: ColorPoint, options?: RpcOptions): UnaryCall<ColorPoint, ColorPoint> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<ColorPoint, ColorPoint>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CheckPoint(tttt.Point) returns (tttt.Point);
+     */
+    checkPoint(input: Point, options?: RpcOptions): UnaryCall<Point, Point> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<Point, Point>("unary", this._transport, method, opt, input);
     }
 }

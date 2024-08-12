@@ -1,24 +1,46 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
-import { RouteTestClient } from '../tmp/test.client';
+import { RouteTestClient } from '../test.client';
 
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
 
-async function test_grpc() {
+const message = ref("")
+
+onMounted(async () => {
   let transport = new GrpcWebFetchTransport({ baseUrl: "http://localhost:3000" })
   let client = new RouteTestClient(transport)
-  //let {response} = await client.checkColorPoint({color: {red: 1, blue:2,green:3}, point: {x:1, y:2}})
-  let { response } = await client.checkColorPoint({ point: { x: 1, y: 2 } })
-  console.log("got a small hat! ", response)
-}
-test_grpc()
 
+  let { response } = await client.checkColorPoint({
+    color: { red: 1, blue: 2, green: 3 }, point: { x: 1, y: 2 }, tolerance: 0.5,
+    name: 'name',
+    children: [{
+      tolerance: 0,
+      name: '',
+      children: [],
+      info: {}
+    }],
+    info: {
+      name: {
+        tolerance: 0,
+        name: '',
+        children: [],
+        info: {}
+      },
+      name2: {
+        tolerance: 0,
+        name: '',
+        children: [],
+        info: {}
+      }
+    }
+  })
+  message.value = JSON.stringify(response)
+})
 
-console.log(1)
 
 </script>
 <template>
@@ -26,6 +48,7 @@ console.log(1)
   <h1>{{ msg }}</h1>
 
   <div class="card">
+    <p>{{ message }}</p>
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit

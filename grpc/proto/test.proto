@@ -16,9 +16,15 @@ message Point {
 message ColorPoint {
   Color color = 1;
   Point point = 2;
+  float tolerance = 3;
+  string name = 4;
+  optional float tolerance2 = 5;
+  repeated ColorPoint children = 6;
+  map<string, ColorPoint> info = 7;
 }
+
 
 service RouteTest {
   rpc CheckColorPoint(ColorPoint) returns (ColorPoint);
-
+  rpc CheckPoint(Point) returns (Point);
 }

@@ -1,3 +1,9 @@
-communication between rust backend typescript front
+# rust typescript Communication
 
-1. rspc
+examples for communication between rust server and typescript client(browser)
+
+1. [gPRC](/grpc)
+
+1. [openapi](/openapi)
+
+1. [rspc](/rspc)
