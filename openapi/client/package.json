@@ -1,0 +1,26 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "openapi-ts": "openapi-ts",
+    "openapi-typescript": "openapi-typescript ../server/openapi.yaml -o src/openapi-typescript-schema.d.ts"
+  },
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.2.4",
+    "openapi-fetch": "^0.11.0",
+    "vue": "^3.4.35"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.52.5",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "openapi-typescript": "^7.3.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vue-tsc": "^2.0.29"
+  }
+}

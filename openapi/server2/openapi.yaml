@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  title: Users
+  version: '1.0'
+servers:
+- url: http://localhost:3000/
+tags: []
+paths:
+  /send_code:
+    post:
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SendCode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SendCodeResponse'
+  /send_code2/{path}:
+    post:
+      parameters:
+      - name: path
+        schema:
+          type: string
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      - name: query
+        schema:
+          type: string
+        in: query
+        required: true
+        deprecated: false
+        explode: true
+      - name: query2
+        schema:
+          type: array
+          items:
+            type: integer
+            format: uint8
+        in: query
+        required: true
+        deprecated: false
+        explode: true
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SendCode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+  /hello:
+    get:
+      parameters:
+      - name: name
+        schema:
+          type: string
+        in: query
+        required: false
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain; charset=utf-8:
+              schema:
+                type: string
+components:
+  schemas:
+    SendCode:
+      type: object
+      required:
+      - mobile
+      properties:
+        mobile:
+          type: string
+    SendCodeResponse:
+      type: object
+      required:
+      - found_account
+      properties:
+        found_account:
+          type: boolean

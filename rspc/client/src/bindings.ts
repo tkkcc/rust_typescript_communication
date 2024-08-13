@@ -2,7 +2,10 @@
 
 export type Procedures = {
     queries: 
+        { key: "toggle", input: User, result: User } | 
         { key: "version", input: never, result: string },
     mutations: never,
     subscriptions: never
 };
+
+export type User = { mobile: string; more: number; what: boolean[] | null }

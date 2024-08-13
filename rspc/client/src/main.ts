@@ -35,8 +35,18 @@ const client = createClient<Procedures>({
 });
 
 async function ff() {
+  let node = document.querySelector<HTMLButtonElement>('#message')!;
   // Now use the client in your code!
   let version = await client.query(["version"]); // The types will be inferred from your backend.
-  document.querySelector<HTMLButtonElement>('#message')!.innerText = version
+
+
+  // The types will be inferred from your backend.
+  let newUser = await client.query(["toggle", {
+    mobile: '0',
+    more: 0,
+    what: [false, true]
+  }]);
+
+  node.innerText = "fetched: " + JSON.stringify(newUser) + `\nversion: ${version}`
 }
 ff()

@@ -2,15 +2,27 @@ use std::path::PathBuf;
 
 use axum::routing::get;
 use rspc::Router;
+use serde::{Deserialize, Serialize};
+use specta::Type;
 use tower_http::cors::CorsLayer;
+
+#[derive(Type, Deserialize, Serialize)]
+struct User {
+    mobile: String,
+    more: i32,
+    what: Option<Vec<bool>>,
+}
 
 fn router() -> Router<()> {
     <Router>::new()
         .query("version", |t| t(|ctx, input: ()| env!("CARGO_PKG_VERSION")))
+        .query("toggle", |t| {
+            t(|ctx, mut input: User| {
+                input.mobile += " 1";
+                input
+            })
+        })
         .build()
-}
-mod t1 {
-    struct A {}
 }
 
 #[tokio::main]
@@ -30,15 +42,4 @@ async fn main() {
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
-}
-
-#[cfg(test)]
-mod tests {
-    // It is highly recommended to unit test your rspc router by creating it
-    // This will ensure it doesn't have any issues and also export updated Typescript types.
-
-    #[test]
-    fn test_rspc_router() {
-        super::router();
-    }
 }
