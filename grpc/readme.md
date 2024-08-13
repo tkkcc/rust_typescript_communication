@@ -8,7 +8,8 @@
 
 ## limit
 
-in proto3, nested message must be optional. thus in rust, struct fields in struct are always wrapped in Option
+1. not code-first
+2. in proto3, nested message must be optional. thus in rust, struct fields in struct are always wrapped in Option
 
 ## run
 

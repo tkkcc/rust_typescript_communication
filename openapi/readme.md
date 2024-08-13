@@ -8,18 +8,18 @@
 
 ## limit
 
-1. axum has no official support, need third party tool, like <https://github.com/kurtbuilds/oasgen>.
+1. axum has no official support, need third party tool, like [oasgen](https://github.com/kurtbuilds/oasgen).
 poem, salvo, zino have builtin support
 
 1. axum query works in swagger ui, but not with typescript generator. simply **don't use query** can solve this, only use path and body, or only body
 
-1. openapi-typescript consume response type as json, so fail to decode plain text. use Json response can solve. openapi-typescript generate query style api, no code completion for method names
+1. openapi-typescript consume response type as json, so fail to decode plain text. **use Json response** can solve. openapi-typescript generate query style api, no code completion for method names
 
 1. openapi-ts generate function style api, like grpc. but don't force typing on path and query, only body. specific path, query, body add one layer complexity, compared with grpc
 
 ## run
 
-this example use two openapi to typescript generator
+this example use two generators from openapi to typescript
 
 start server
 
