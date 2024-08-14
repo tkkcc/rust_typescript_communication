@@ -33,6 +33,12 @@ function App() {
         name
       }
     }
+    add2(a: 1,b:2) {
+      name,
+      related {
+        name
+      }
+    }
   }
   `
 
