@@ -1,5 +1,6 @@
 use std::{result::Result, time::Duration};
 
+use axum::routing::get;
 use tokio::{sync::mpsc, time::sleep};
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{transport::Server, Request, Response, Status};
@@ -70,19 +71,20 @@ impl RouteTest for MyGreeter {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt::init();
 
-    let addr = "127.0.0.1:3000".parse().unwrap();
+    let route_test = RouteTestServer::new(MyGreeter::default());
 
-    let route_test = MyGreeter::default();
-    let route_test = RouteTestServer::new(route_test);
-
-    println!("GreeterServer listening on {}", addr);
-
-    Server::builder()
+    let rpc = Server::builder()
         // GrpcWeb is over http1 so we must enable it.
         .accept_http1(true)
-        .add_service(tonic_web::enable(route_test))
-        .serve(addr)
-        .await?;
+        .add_service(tonic_web::enable(route_test));
+
+    let addr = "127.0.0.1:3000";
+    println!("GreeterServer listening on {addr}");
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+    let route = axum::Router::new()
+        .route("/404", get(|| async { "404" }))
+        .merge(rpc.into_router());
+    axum::serve(listener, route).await.unwrap();
 
     Ok(())
 }

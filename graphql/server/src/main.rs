@@ -55,6 +55,7 @@ impl Subscription {
         let mut value = User::default();
         let stream = IntervalStream::new(interval(Duration::from_secs(1))).map(move |_| {
             value.name = (value.name.parse::<i32>().unwrap_or_default() + 1).to_string();
+            dbg!(&value.name);
             Ok(value.clone())
         });
         Box::pin(stream)

@@ -27,6 +27,7 @@ fn router() -> Router<()> {
             t(|ctx, input: User| {
                 async_stream::stream! {
                     for i in input.more.. {
+                        dbg!(i);
                         yield User { mobile: "m".into(), more: i, what: None };
                         sleep(Duration::from_secs(1)).await;
                     }
