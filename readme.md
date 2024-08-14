@@ -4,8 +4,9 @@ different methods for communication between rust server and typescript client(br
 
 all methods except grpc, support code-first approach: rust -> (optional)generate schema -> generate typescript
 
-all methods support server streaming, but openapi's is more low level, via server-sent events
+all methods support server streaming, but openapi's way is more low level
 
+all methods support code completion for api methods and parameters
 
 [gprc](/grpc)
 

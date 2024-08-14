@@ -4,7 +4,7 @@
 
 1. write server code
 1. generate openapi schema via builtin or third party tool
-1. generate typescript client via openapi-ts or openapi-typescript, and others
+1. generate typescript client via [openapi-ts](https://github.com/hey-api/openapi-ts) or [openapi-typescript](https://github.com/openapi-ts/openapi-typescript), and others
 
 ## limit
 
@@ -13,9 +13,9 @@ poem, salvo, zino have builtin support
 
 1. axum query works in swagger ui, but not with typescript generator. simply **don't use query** can solve this, only use path and body, or only body
 
-1. openapi-typescript consume response type as json, so fail to decode plain text. **use Json response** can solve. openapi-typescript generate query style api(has code completion for method names)
+1. openapi-typescript consumes response type as json, so can't decode plain text. **use Json response** can solve. openapi-typescript generate query style api, force typing on path, query and body
 
-1. openapi-ts generate function style api. but don't force typing on path and query, only body. specific path, query, body add more complexity, compared with grpc
+1. openapi-ts generates function style api, but doesn't force typing on path and query, only body. specifying path, query, body adds more complexity, compared with grpc
 
 ## run
 
