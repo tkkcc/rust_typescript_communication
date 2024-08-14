@@ -28,8 +28,6 @@ const client2 = createClient<paths>({ baseUrl: "http://localhost:3000" });
     }
   })
 
-
-
   text.value += "\nfetch with openapi-ts: \n" + JSON.stringify(response.data)
 
   const response2 = await client2.POST("/send-code2/{some_path_what}", {
