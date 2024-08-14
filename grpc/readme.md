@@ -3,12 +3,12 @@
 ## step
 
 1. write proto
-1. generate server code via tonic
-1. generate client code via protobuf-ts
+1. generate server code via [tonic](https://github.com/hyperium/tonic)
+1. generate client code via [protobuf-ts](https://github.com/timostamm/protobuf-ts)
 
 ## limit
 
-1. not code-first
+1. schema-first, not code-first
 2. in proto3, nested message must be optional. thus in rust, struct fields in struct are always wrapped in Option
 
 ## run
@@ -28,6 +28,8 @@ npm i
 npm run proto-build  # this will generate typescript code
 npm run dev
 ```
+
+open <http://localhost:5173>
 
 ## how client created
 

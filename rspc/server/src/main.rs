@@ -1,9 +1,10 @@
-use std::path::PathBuf;
+use std::{path::PathBuf, time::Duration};
 
 use axum::routing::get;
 use rspc::Router;
 use serde::{Deserialize, Serialize};
 use specta::Type;
+use tokio::time::sleep;
 use tower_http::cors::CorsLayer;
 
 #[derive(Type, Deserialize, Serialize)]
@@ -16,10 +17,20 @@ struct User {
 fn router() -> Router<()> {
     <Router>::new()
         .query("version", |t| t(|ctx, input: ()| env!("CARGO_PKG_VERSION")))
-        .query("toggle", |t| {
+        .mutation("toggle", |t| {
             t(|ctx, mut input: User| {
                 input.mobile += " 1";
                 input
+            })
+        })
+        .subscription("listen_new_user", |t| {
+            t(|ctx, input: User| {
+                async_stream::stream! {
+                    for i in input.more.. {
+                        yield User { mobile: "m".into(), more: i, what: None };
+                        sleep(Duration::from_secs(1)).await;
+                    }
+                }
             })
         })
         .build()

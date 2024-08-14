@@ -8,8 +8,6 @@
 ## limit
 
 1. docs incomplete
-2. query style, not function style, but support method name auto completion
-
 
 ## run
 
@@ -25,6 +23,9 @@ cd client
 npm i
 npm run dev
 ```
+
+open <http://localhost:5173>
+
 
 ## how client created
 

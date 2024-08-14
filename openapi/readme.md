@@ -38,6 +38,8 @@ npm run openapi-typescript  # this will generate typescript code
 npm run dev
 ```
 
+open <http://localhost:5173>
+
 ## how client created
 
 ```sh

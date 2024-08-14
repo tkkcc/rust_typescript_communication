@@ -27,4 +27,5 @@ message ColorPoint {
 service RouteTest {
   rpc CheckColorPoint(ColorPoint) returns (ColorPoint);
   rpc CheckPoint(Point) returns (Point);
+  rpc CheckPointStream(Point) returns (stream Point);
 }

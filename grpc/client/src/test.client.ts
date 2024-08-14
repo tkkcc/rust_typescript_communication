@@ -4,6 +4,7 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { RouteTest } from "./test";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { Point } from "./test";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { ColorPoint } from "./test";
@@ -21,6 +22,10 @@ export interface IRouteTestClient {
      * @generated from protobuf rpc: CheckPoint(tttt.Point) returns (tttt.Point);
      */
     checkPoint(input: Point, options?: RpcOptions): UnaryCall<Point, Point>;
+    /**
+     * @generated from protobuf rpc: CheckPointStream(tttt.Point) returns (stream tttt.Point);
+     */
+    checkPointStream(input: Point, options?: RpcOptions): ServerStreamingCall<Point, Point>;
 }
 /**
  * @generated from protobuf service tttt.RouteTest
@@ -44,5 +49,12 @@ export class RouteTestClient implements IRouteTestClient, ServiceInfo {
     checkPoint(input: Point, options?: RpcOptions): UnaryCall<Point, Point> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<Point, Point>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CheckPointStream(tttt.Point) returns (stream tttt.Point);
+     */
+    checkPointStream(input: Point, options?: RpcOptions): ServerStreamingCall<Point, Point> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<Point, Point>("serverStreaming", this._transport, method, opt, input);
     }
 }

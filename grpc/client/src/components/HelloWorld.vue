@@ -8,38 +8,32 @@ defineProps<{ msg: string }>()
 
 const count = ref(0)
 
-const message = ref("")
+const query_message = ref("loading")
+const stream_message = ref("loading")
 
 onMounted(async () => {
   let transport = new GrpcWebFetchTransport({ baseUrl: "http://localhost:3000" })
   let client = new RouteTestClient(transport)
 
+  // query
   let { response } = await client.checkColorPoint({
     color: { red: 1, blue: 2, green: 3 }, point: { x: 1, y: 2 }, tolerance: 0.5,
     name: 'name',
-    children: [{
-      tolerance: 0,
-      name: '',
-      children: [],
-      info: {}
-    }],
-    info: {
-      name: {
-        tolerance: 0,
-        name: '',
-        children: [],
-        info: {}
-      },
-      name2: {
-        tolerance: 0,
-        name: '',
-        children: [],
-        info: {}
-      }
-    }
+    children: [],
+    info: {}
   })
-  message.value = JSON.stringify(response)
+  query_message.value = JSON.stringify(response)
+
+  // stream
+  let stream = client.checkPointStream({
+    x: 0,
+    y: 100
+  });
+  for await (let response of stream.responses) {
+    stream_message.value = JSON.stringify(response)
+  }
 })
+
 
 
 </script>
@@ -48,7 +42,8 @@ onMounted(async () => {
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <p>{{ message }}</p>
+    <p>query: {{ query_message }}</p>
+    <p>stream: {{ stream_message }}</p>
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit

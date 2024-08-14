@@ -311,5 +311,6 @@ export const ColorPoint = new ColorPoint$Type();
  */
 export const RouteTest = new ServiceType("tttt.RouteTest", [
     { name: "CheckColorPoint", options: {}, I: ColorPoint, O: ColorPoint },
-    { name: "CheckPoint", options: {}, I: Point, O: Point }
+    { name: "CheckPoint", options: {}, I: Point, O: Point },
+    { name: "CheckPointStream", serverStreaming: true, options: {}, I: Point, O: Point }
 ]);

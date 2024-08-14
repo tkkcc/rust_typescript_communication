@@ -1,5 +1,7 @@
-use std::result::Result;
+use std::{result::Result, time::Duration};
 
+use tokio::{sync::mpsc, time::sleep};
+use tokio_stream::wrappers::ReceiverStream;
 use tonic::{transport::Server, Request, Response, Status};
 
 use tttt::{
@@ -28,8 +30,39 @@ impl RouteTest for MyGreeter {
         Ok(Response::new(color_point))
     }
 
-    async fn check_point(&self, request: tonic::Request<Point>) -> Result<Response<Point>, Status> {
+    async fn check_point(&self, request: Request<Point>) -> Result<Response<Point>, Status> {
         Ok(Response::new(request.into_inner()))
+    }
+
+    type CheckPointStreamStream = ReceiverStream<Result<Point, Status>>;
+
+    async fn check_point_stream(
+        &self,
+        request: Request<Point>,
+    ) -> Result<Response<Self::CheckPointStreamStream>, Status> {
+        let (tx, rx) = mpsc::channel(1);
+
+        let Point { x, y } = request.into_inner();
+        tokio::spawn(async move {
+            for delta in 1.. {
+                dbg!(delta);
+                if let Err(error) = tx
+                    .send(Ok(Point {
+                        x: x + delta,
+                        y: y + delta,
+                    }))
+                    .await
+                {
+                    // when browser client close, user close page
+                    dbg!(error);
+                    break;
+                }
+
+                sleep(Duration::from_secs(1)).await;
+            }
+        });
+
+        Ok(Response::new(ReceiverStream::new(rx)))
     }
 }
 
