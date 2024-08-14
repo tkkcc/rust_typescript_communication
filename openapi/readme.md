@@ -17,9 +17,12 @@ poem, salvo, zino have builtin support
 
 1. specifying path, query, body adds one level complexity, compared with other communication methods
 
+1. use [server send event](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#sending_events_from_the_server) for streaming/subscription, check [EventStream](https://docs.rs/poem-openapi/5.0.3/poem_openapi/payload/struct.EventStream.html)
+
 ## run
 
-this example use two generators from openapi to typescript
+> this example use two generators from openapi to typescript  
+> this example doesn't showcase streaming
 
 start server
 
