@@ -8,7 +8,8 @@
 
 ## limit
 
-1. gql tag autocompletion need time to setup for neovim, vscode is easy
+1. gql tag autocompletion need additional care to setup, for neovim, vscode is easy
+2. wasting time follow this [guide](https://the-guild.dev/graphql/codegen/docs/guides/react-vue), but it's fake
 
 ## run
 

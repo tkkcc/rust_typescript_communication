@@ -9,7 +9,7 @@
 ## limit
 
 1. schema-first, not code-first
-2. in proto3, nested message must be optional. thus in rust, struct fields in struct are always wrapped in Option
+2. in proto3, nested message must be optional. thus in rust, struct fields in struct must be wrapped in Option
 
 ## run
 
