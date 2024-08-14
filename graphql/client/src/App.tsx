@@ -2,49 +2,48 @@ import { useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Chain, Subscription } from './zeus'
-import { graphql } from './gql'
+import { gql, InMemoryCache, OnSubscriptionDataOptions, TypedDocumentNode, useQuery, useSubscription } from '@apollo/client'
+
+function SubscriptionTest() {
+  const COMMENTS_SUBSCRIPTION:TypedDocumentNode = gql`
+  subscription  {
+    count {
+      name
+    }
+  }
+`;
+  const { loading, data } = useSubscription(COMMENTS_SUBSCRIPTION)
+  if (loading) return <p>subscription: loading</p>
+  return (
+    <p> subscription:  {JSON.stringify(data)}
+    </p>
+  )
+}
 
 function App() {
   const [count, setCount] = useState(0)
-  const [msg, setMsg] = useState("loading")
 
-  const a = graphql('query add()')
 
-    ; (async () => {
 
-      const chain = Chain("http://127.0.0.1:8080/graphql")
-      const res = await chain('query')({
-        add: [{
-          a: 0,
-          b: 0,
-        }, {
-          name: true,
-          related: {
-            name: true
-          }
-        }]
-      });
+  const ADD_QUERY = gql`
+  query {
+    add(a: 1,b:2) {
+      name,
+      related {
+        name
+      }
+    }
+  }
+  `
 
-      setMsg(`fetch: ${JSON.stringify(res)}`)
 
-      const sub = Subscription('http://127.0.0.1:8080/subscriptions');
-      sub('subscription')({
-        count: {
-          name: true
-        }
 
-      }).on((res) => {
-        console.log(res)
-        // setMsg(msg + res.count)
-      });
-
-    })()
-
+  const { loading, error, data } = useQuery(ADD_QUERY)
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
   return (
     <>
       <div>
-
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -53,7 +52,10 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <p>{msg}</p>
+      <p>query: {JSON.stringify(data)}</p>
+      <SubscriptionTest>
+
+      </SubscriptionTest>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

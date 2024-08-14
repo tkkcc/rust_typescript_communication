@@ -3,22 +3,28 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "graphql": {
+    "schema": "../server/schema.graphql",
+    "documents": "**/*.{graphql,js,ts,jsx,tsx}"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "codegen": "npx zeus ../server/schema.graphql src"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "^5.0.2",
+    "@apollo/client": "^3.11.4",
     "@parcel/watcher": "^2.4.1",
     "graphql": "^16.9.0",
+    "graphql-ws": "^5.16.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@0no-co/graphqlsp": "^1.12.13",
     "@eslint/js": "^9.8.0",
+    "@graphql-codegen/cli": "^5.0.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

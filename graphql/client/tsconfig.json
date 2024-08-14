@@ -8,12 +8,20 @@
       "path": "./tsconfig.node.json"
     }
   ],
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "ts-graphql-plugin",
-        "schema": "../server/schema.graphql"
-      }
-    ]
-  }
+  // "compilerOptions": {
+  //   "plugins": [
+  //     {
+  //       "name": "@0no-co/graphqlsp",
+  //       "schema": "schema.graphql"
+  //     }
+  //   ]
+  // }
+  // "compilerOptions": {
+  //   "plugins": [
+  //     {
+  //       "name": "ts-graphql-plugin",
+  //       "schema": "../server/schema.graphql"
+  //     }
+  //   ]
+  // }
 }
