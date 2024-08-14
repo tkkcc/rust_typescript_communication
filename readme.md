@@ -12,8 +12,9 @@ all methods support code completion for api methods and parameters
 
 [openapi](/openapi)
 
+[graphql](/graphql)
+
 [rspc](/rspc)
 
 [qubit](https://github.com/andogq/qubit)
 
-[graphql](/graphql)

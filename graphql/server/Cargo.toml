@@ -1,0 +1,18 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7.5"
+futures = "0.3.30"
+juniper = {version="0.16.1", features = ["schema-language"]}
+juniper_axum = { version = "0.1.0", features = ["subscriptions"] }
+juniper_graphql_ws = { version = "0.4.0", features = ["graphql-transport-ws"] }
+serde = "1.0.207"
+serde_json = "1.0.124"
+tokio = { version = "1.39.2", features = ["full"] }
+tokio-stream = "0.1.15"
+tower-http = { version = "0.5.2", features = ["cors"] }
+tracing = "0.1.40"
+tracing-subscriber = "0.3.18"

@@ -1,0 +1,21 @@
+schema {
+  query: Query
+  subscription: Subscription
+}
+
+type Query {
+  "Adds two `a` and `b` numbers."
+  add(a: Int!, b: Int!): User!
+  "Adds two `a` and `b` numbers."
+  add2(a: Int!, b: Int!): User!
+}
+
+type Subscription {
+  "Counts seconds."
+  count: User!
+}
+
+type User {
+  name: String!
+  related: [User!]!
+}
